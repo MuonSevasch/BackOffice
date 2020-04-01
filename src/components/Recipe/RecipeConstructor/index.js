@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 
-import { Button, Modal } from "antd";
+import { Modal } from "antd";
 
 export default class RecipeConstructor extends Component {
   handleCancel = () => {
@@ -14,16 +14,14 @@ export default class RecipeConstructor extends Component {
     const { showConstructor, setShowConstructor } = this.props;
     return (
       <div>
-        <Button onClick={setShowConstructor} type="primary">
-          Добавить рецепт
-        </Button>
-
         <Modal
           title="Новый рецепт"
           centered={true}
           visible={showConstructor}
           onOk={setShowConstructor}
           onCancel={setShowConstructor}
+          okText="Подтвердить"
+          cancelText="Отмена"
         ></Modal>
       </div>
     );

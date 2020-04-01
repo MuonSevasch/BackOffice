@@ -6,7 +6,7 @@ class Api {
   async login(username, password) {
     let data = {};
     await axios
-      .post(`${baseURL}/login`)
+      .post(`${baseURL}/login`, { username, password })
       .then(response => {
         data = response.data;
         console.log(response);
@@ -17,12 +17,12 @@ class Api {
     return data;
   }
 
-  async getAllFood() {
-    let allFood = [];
+  async getAllLoot(lootName) {
+    let allLoot = [];
     await axios
-      .get(`${baseURL}/food`)
+      .get(`${baseURL}/${lootName}`)
       .then(function(response) {
-        allFood = response.data;
+        allLoot = response.data;
         console.log(response);
       })
       .catch(function(error) {
@@ -30,29 +30,62 @@ class Api {
         console.log(error);
       });
 
-    return allFood;
+    return allLoot;
   }
-  async getProductsRequired() {
-    let data = {};
+
+  async getLoot(lootName, id) {
+    let loot = {};
     await axios
-      .get(`${baseURL}/userForm/productsRequired`)
+      .get(`${baseURL}/${lootName}/${id}`)
       .then(function(response) {
+        loot = response.data;
         console.log(response);
-        data = response.data;
       })
       .catch(function(error) {
         // handle error
+        console.log(error);
+      });
+
+    return loot;
+  }
+
+  async deleteLoot(lootName, id) {
+    let loot = {};
+    await axios
+      .delete(`${baseURL}/${lootName}/${id}`)
+      .then(function(response) {
+        loot = response.data;
+        console.log(response);
+      })
+      .catch(function(error) {
+        // handle error
+        console.log(error);
+      });
+
+    return loot;
+  }
+
+
+  async addRecipe(root, info) {
+    let data = {};
+    await axios
+      .post(`${baseURL}/${root}`, info)
+      .then(response => {
+        data = response.data;
+        console.log(response);
+      })
+      .catch(error => {
         console.log(error);
       });
     return data;
   }
 
-  async sendInfo(info) {
+  async updateRecipe(root, info, id) {
     let data = {};
     await axios
-      .post(`${baseURL}/userform`, info)
+      .put(`${baseURL}/${root}/${id}`, info)
       .then(response => {
-        data = response;
+        data = response.data;
         console.log(response);
       })
       .catch(error => {

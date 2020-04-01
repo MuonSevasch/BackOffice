@@ -37,7 +37,10 @@ export default class Recipe extends Component {
               setShowConstructor={this.setShowConstructor}
             />
 
-            <RecipeList recipes={recipes} />
+            <RecipeList
+              recipes={recipes}
+              setShowConstructor={this.setShowConstructor}
+            />
           </div>
         )}
       </>

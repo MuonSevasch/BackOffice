@@ -7,7 +7,7 @@ import { TeamOutlined, ProfileOutlined } from "@ant-design/icons";
 import PersonInfo from "./components/PersonInfo";
 import Recipe from "./components/Recipe";
 import SignIn from "./components/SignIn";
-import axios from "axios";
+import Api from "./global/api";
 
 const { Content, Sider } = Layout;
 
@@ -30,34 +30,41 @@ class App extends React.Component {
   };
 
   componentDidMount() {
-    axios
-      .post("http://25.48.59.169:8080/api/login", {
-        username: this.state.username,
-        password: this.state.password
-      })
-      .then(res => {
-        console.log(res);
-        axios.get("http://25.48.59.169:8080/api/users").then(
-          result => {
-            console.log(result);
-            this.setState({ persons: result.data });
-            console.log(this.state.persons);
-          },
-          error => {
-            this.setState({
-              isLoaded: true,
-              error
-            });
-
-            console.log(error);
-          }
-        );
+    Api.login(this.state.username, this.state.password).then(() => {
+      Api.getAllLoot("userForms").then(result => {
+        console.log(result);
+        this.setState({ persons: result.data });
+        console.log(this.state.persons);
       });
+    });
+    // axios
+    //   .post("http://25.48.59.169:8080/api/login", {
+    //     username: this.state.username,
+    //     password: this.state.password
+    //   })
+    //   .then(res => {
+    //     console.log(res);
+    //     axios.get("http://25.48.59.169:8080/api/users").then(
+    //       result => {
+    //         console.log(result);
+    //         this.setState({ persons: result.data });
+    //         console.log(this.state.persons);
+    //       },
+    //       error => {
+    //         this.setState({
+    //           isLoaded: true,
+    //           error
+    //         });
+
+    //         console.log(error);
+    //       }
+    //     );
+    //   });
   }
 
   render() {
     const { recipes, persons } = this.state;
-    console.log(recipes)
+    console.log(recipes);
     return (
       <Layout style={{ minHeight: "100vh" }}>
         <Sider
