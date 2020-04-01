@@ -1,7 +1,6 @@
 import React from "react";
 import PersonInfo from "../PersonInfo"
-import {Input} from 'antd';
-import { Button, Divider, Row, Col, Modal } from "antd";
+import { Button, Divider, Row, Col, Modal, Input } from "antd";
 import "./index.css"
 
 
@@ -41,8 +40,6 @@ showModal = () => {
       filteredPoets
     )
   }
-
-
 
   render() {
     let parasha = this.filterPoets().map((person, index) => {

@@ -17,10 +17,10 @@ class Api {
     return data;
   }
 
-  async getAllLoot(lootName) {
+  async getAllLoot(route) {
     let allLoot = [];
     await axios
-      .get(`${baseURL}/${lootName}`)
+      .get(`${baseURL}/${route}`)
       .then(function(response) {
         allLoot = response.data;
         console.log(response);
@@ -33,10 +33,10 @@ class Api {
     return allLoot;
   }
 
-  async getLoot(lootName, id) {
+  async getLoot(route, id) {
     let loot = {};
     await axios
-      .get(`${baseURL}/${lootName}/${id}`)
+      .get(`${baseURL}/${route}/${id}`)
       .then(function(response) {
         loot = response.data;
         console.log(response);
@@ -49,10 +49,10 @@ class Api {
     return loot;
   }
 
-  async deleteLoot(lootName, id) {
+  async deleteLoot(route, id) {
     let loot = {};
     await axios
-      .delete(`${baseURL}/${lootName}/${id}`)
+      .delete(`${baseURL}/${route}/${id}`)
       .then(function(response) {
         loot = response.data;
         console.log(response);
@@ -65,6 +65,21 @@ class Api {
     return loot;
   }
 
+  async getAllFood(route) {
+    let allLoot = [];
+    await axios
+      .get(`http://25.48.59.169:8080/public/api/${route}`)
+      .then(function(response) {
+        allLoot = response.data;
+        console.log(response);
+      })
+      .catch(function(error) {
+        // handle error
+        console.log(error);
+      });
+
+    return allLoot;
+  }
 
   async addRecipe(root, info) {
     let data = {};
