@@ -1,20 +1,49 @@
-import React from "react";
-import { Button } from "antd";
+import React, { Component } from "react";
+import { Spin } from "antd";
 
-export default class Recipe extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {};
-  }
+import RecipeList from "./RecipeList";
+import RecipeConstructor from "./RecipeConstructor";
+
+export default class Recipe extends Component {
+  state = {
+    showConstructor: false
+  };
+
+  setShowConstructor = () => {
+    this.setState({ showConstructor: !this.state.showConstructor });
+  };
+
   render() {
+    const { loading, error, recipes } = this.props;
     return (
-      <div>
-        <Button type="primary">Добавить рецепт</Button>
-        <Button type="primary">Редактровать</Button>
-        <Button size="small" type="danger">
-          Удалить рецепт
-        </Button>
-      </div>
+      <>
+        {error && (
+          <>
+            {/* <Error name={"Task"} /> */}
+            <span>Произошла ошибка</span>
+          </>
+        )}
+
+        {loading && (
+          <>
+            <Spin size="large" />
+          </>
+        )}
+
+        {!error && !loading && (
+          <div>
+            <RecipeConstructor
+              showConstructor={this.state.showConstructor}
+              setShowConstructor={this.setShowConstructor}
+            />
+
+            <RecipeList
+              recipes={recipes}
+              setShowConstructor={this.setShowConstructor}
+            />
+          </div>
+        )}
+      </>
     );
   }
 }
