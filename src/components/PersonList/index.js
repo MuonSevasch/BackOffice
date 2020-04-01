@@ -18,6 +18,7 @@ class PersonList extends React.Component {
       return poetName.indexOf(
         this.state.search.toLowerCase()) !== -1
     })
+    console.log(filteredPoets)
     return(
       filteredPoets
     )
@@ -27,7 +28,7 @@ class PersonList extends React.Component {
     let parasha = this.filterPoets().map((person, index) => {
       return <PersonInfo currentPerson ={person} key={index}/>
     });
-    console.log(parasha)
+    console.log(parasha, this.state.search)
     return (
       <div style={{textAlign:"center"}}>
         <Input  style={{ width: 200, marginBottom: "20px"}}
