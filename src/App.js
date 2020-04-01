@@ -12,6 +12,7 @@ import Api from "./global/api";
 const { Content, Sider } = Layout;
 
 class App extends React.Component {
+
   state = {
     receptVisibility: false,
     collapsed: false,
