@@ -9,9 +9,9 @@ import {
 
 
 
-import Person_info from "./components/Person_info";
-import Make_recept from './components/Make_recept';
-import Register from './components/Register';
+import PersonInfo from "./components/PersonInfo";
+import Recipe from './components/Recipe';
+import SignIn from './components/SignIn';
 import axios from "axios"
 
 
@@ -82,8 +82,8 @@ class App extends React.Component {
                 <Layout className="site-layout">
                     <Content style={{ margin: '0 16px' }}>
                         <div className="site-layout-background" style={{ padding: 24, minHeight: 360 }}>
-                            {this.state.receptVisibility && <Person_info />}
-                            {this.state.clientsVisibility && <Make_recept />}
+                            {this.state.receptVisibility && <PersonInfo />}
+                            {this.state.clientsVisibility && <Recipe />}
                         </div>
                     </Content>
                 </Layout>

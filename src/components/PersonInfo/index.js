@@ -5,12 +5,11 @@ import "antd/dist/antd.css"
 
 const DemoBox = props => <p className={`height-${props.value}`}>{props.children}</p>
 
-export default class Person_info extends React.Component {
+export default class PersonInfo extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             currentPerson: props.currentPerson,
-            visibility: false,
         }
     }
 
