@@ -18,7 +18,7 @@ class App extends React.Component {
     isLoaded: false,
     error: null,
     persons: [],
-    recipies: [],
+    recipes: [],
     clientsVisibility: false,
     username: "test-user",
     password: "my-password"
@@ -57,6 +57,7 @@ class App extends React.Component {
 
   render() {
     const { recipes, persons } = this.state;
+    console.log(recipes)
     return (
       <Layout style={{ minHeight: "100vh" }}>
         <Sider
@@ -99,7 +100,7 @@ class App extends React.Component {
               style={{ padding: 24, minHeight: 360 }}
             >
               {this.state.receptVisibility && <PersonInfo persons={persons} />}
-              {this.state.clientsVisibility && <Recipe recipies={recipes} />}
+              {this.state.clientsVisibility && <Recipe recipes={recipes} />}
             </div>
           </Content>
         </Layout>
