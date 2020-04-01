@@ -1,29 +1,54 @@
 import React from "react";
-import { Button, Col } from "antd";
+import { Button, Divider, Row, Col, Modal } from "antd";
 import "antd/dist/antd.css"
 
-
-const DemoBox = props => <p className={`height-${props.value}`}>{props.children}</p>
 
 export default class PersonInfo extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            currentPerson: props.currentPerson,
+            currentPerson: this.props.currentPerson,
+            visible: false,
         }
     }
 
+
+    handleCancel = (e) => {
+        console.log(e);
+        this.setState({
+          visible: false,
+        });
+      };
+
+      handleOk = (e) => {
+        console.log(e);
+        this.setState({
+          visible: false,
+        });
+      };
+      showModal = () => {
+        this.setState({
+          visible: true,
+        });
+      };
+
     render() {
         return (
-            <div>
-                <Col justify="center" align="top" style={{ textAlign: "center" }}>
-                        <DemoBox value={100}>col-4</DemoBox>
-                        
-                </Col>
-                <Button type="primary" style={{ margin: "5%" }}>Сгенерировать PDF</Button>
-                <Button type="primary" style={{ margin: "5%" }}>Посчитать питание</Button>
-                <Button danger type="primary" style={{ margin: "5%" }}>Удалить</Button>
-            </div>
+            <div className="person-info" style={{ textAlign: "center" }}>
+                <Row justify="space-around" align="middle" key={this.state.currentPerson._id}>
+                    <h1>{this.state.currentPerson.firstName}</h1>
+                    <h1>{this.state.currentPerson.lastName}</h1>
+                    <Button  onClick={this.showModal} type="primary" size="middle" style={{ margin: "5%" }}>Развернуть</Button>
+                    <Modal
+                        title="Basic Modal"
+                        visible={this.state.visible}
+                        onOk={this.handleOk}
+                        onCancel={this.handleCancel}
+                    >
+                    </Modal>
+                <Button danger type="primary" size="middle" style={{ margin: "5%" }}>Удалить</Button>
+                </Row>
+            </div >
         )
     }
 }

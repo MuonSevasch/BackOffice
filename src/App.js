@@ -9,10 +9,11 @@ import {
 
 
 
-import PersonInfo from "./components/PersonInfo";
 import Recipe from './components/Recipe';
 import SignIn from './components/SignIn';
 import axios from "axios"
+import PersonList from './components/PersonList';
+import PersonInfo from './components/PersonInfo';
 
 
 const { Content, Sider } = Layout;
@@ -39,7 +40,7 @@ class App extends React.Component {
         axios.post("http://25.48.59.169:8080/api/login",
             { "username": this.state.username, "password": this.state.password }, )
             .then((res) => {console.log(res);
-                axios.get("http://25.48.59.169:8080/api/users")
+                axios.get("http://25.48.59.169:8080/api/userforms")
                 .then(
                     (result) => {
                         console.log(result)
@@ -82,7 +83,7 @@ class App extends React.Component {
                 <Layout className="site-layout">
                     <Content style={{ margin: '0 16px' }}>
                         <div className="site-layout-background" style={{ padding: 24, minHeight: 360 }}>
-                            {this.state.receptVisibility && <PersonInfo />}
+                            {this.state.receptVisibility && <PersonList persons ={this.state.persons} />}
                             {this.state.clientsVisibility && <Recipe />}
                         </div>
                     </Content>
