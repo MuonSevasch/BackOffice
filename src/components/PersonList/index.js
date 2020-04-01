@@ -1,7 +1,8 @@
 import React from "react";
 import PersonInfo from "../PersonInfo"
 import {Input} from 'antd';
-
+import { Button, Divider, Row, Col, Modal } from "antd";
+import "./index.css"
 
 
 class PersonList extends React.Component {
@@ -9,8 +10,26 @@ class PersonList extends React.Component {
     super(props)
     this.state = {
       search: "",
+      visible: false
     }
   }
+  handleCancel = () => {
+    this.setState({
+        visible: false
+    });
+};
+
+handleOk = () => {
+    this.setState({
+        visible: false
+    });
+};
+showModal = () => {
+    this.setState({
+        visible: true
+    });
+};
+
   filterPoets = () => {
     let filteredPoets = this.props.persons
     filteredPoets = filteredPoets.filter((poet) => {
@@ -18,17 +37,36 @@ class PersonList extends React.Component {
       return poetName.indexOf(
         this.state.search.toLowerCase()) !== -1
     })
-    console.log(filteredPoets)
     return(
       filteredPoets
     )
   }
 
+
+
   render() {
     let parasha = this.filterPoets().map((person, index) => {
-      return <PersonInfo currentPerson ={person} key={index}/>
-    });
-    console.log(parasha, this.state.search)
+      return ( 
+      <div className="person-info" style={{ textAlign: "center" }}  key={person._id}>
+      <Row justify="space-around" align="middle">
+          <h1>{person.firstName}</h1>
+          <h1>{person.lastName}</h1>
+          <p>
+              <Button
+                  onClick={this.showModal}
+                  type="primary"
+                  size="middle"
+                  style={{ margin: "1%" }}
+              >
+                  Развернуть
+          </Button>
+          </p>
+          <Button danger type="primary" size="middle" style={{ margin: "1%" }}>
+              Удалить
+      </Button>
+      </Row>
+  </div>
+    )});
     return (
       <div style={{textAlign:"center"}}>
         <Input  style={{ width: 200, marginBottom: "20px"}}
@@ -36,6 +74,13 @@ class PersonList extends React.Component {
           onChange={(e) => {console.log(e.target); this.setState({ search: e.target.value })}}
           placeholder ="Имя"
         />
+        <Modal
+              visible={this.state.visible}
+              onOk={this.handleOk}
+              onCancel={this.handleCancel}
+              footer={ null}
+          ><PersonInfo person = {this.state.person}/>
+          </Modal>
         {parasha}
       </div>
     )
