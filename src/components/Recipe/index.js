@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Modal, Spin } from "antd";
+import { Modal, Spin, Button } from "antd";
 
 import RecipeList from "./RecipeList";
 import RecipeConstructor from "./RecipeConstructor";
@@ -32,21 +32,23 @@ export default class Recipe extends Component {
 
         {!error && !loading && (
           <div>
-            {/* <Modal
-              title={recipe ? recipe.name : "Новый рецепт"}
+            <Button onClick={this.setShowConstructor} type="primary">
+              Добавить рецепт
+            </Button>
+
+            <Modal
+              title={"Новый рецепт"}
               centered={true}
               destroyOnClose={true}
               visible={this.state.showConstructor}
-              onOk={this.setShowConstructor}
               onCancel={this.setShowConstructor}
-              okText="Подтвердить"
-              cancelText="Отмена"
+              footer={null}
             >
               <RecipeConstructor
                 showConstructor={this.state.showConstructor}
                 setShowConstructor={this.setShowConstructor}
               />
-            </Modal> */}
+            </Modal>
             <RecipeList
               recipes={recipes}
               setShowConstructor={this.setShowConstructor}
