@@ -22,13 +22,21 @@ export default class RecipeList extends Component {
     });
   };
 
+  updateRecipe = async id => {
+   await Api.getLoot(`meals`, id).then(loot => {
+      this.setState({
+        recipe: loot
+      });
+    });
+  };
+
   handleDeletion = async recipe => {
     await Api.deleteLoot(`meals`, recipe._id);
     this.props.updateFoods();
   };
 
   render() {
-    const { recipes } = this.props;
+    const { recipes, updateFoods } = this.props;
     const { search, visible } = this.state;
     const recipeList = recipes
       .filter(recipe => {
@@ -76,7 +84,11 @@ export default class RecipeList extends Component {
           }}
           footer={null}
         >
-          <SingleRecipe recipe={this.state.recipe}></SingleRecipe>
+          <SingleRecipe
+            recipe={this.state.recipe}
+            updateFoods={updateFoods}
+            updateRecipe={this.updateRecipe}
+          ></SingleRecipe>
         </Modal>
 
         <Input

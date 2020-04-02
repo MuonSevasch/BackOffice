@@ -15,13 +15,18 @@ export default class SingleRecipe extends Component {
     this.setState({ editFlag: !this.state.editFlag });
   };
   render() {
-    const { recipe } = this.props;
+    const { recipe, updateFoods, updateRecipe } = this.props;
     const { editFlag } = this.state;
     return (
       <div>
         {editFlag && (
           <>
-            <RecipeConstructor recipe={recipe} />
+            <RecipeConstructor
+              recipe={recipe}
+              updateRecipe={updateRecipe}
+              updateFoods={updateFoods}
+              handleEditFlag={this.handleEditFlag}
+            />
           </>
         )}
         {!editFlag && (
