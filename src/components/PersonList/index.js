@@ -64,10 +64,10 @@ class PersonList extends React.Component {
       return (
         <div
           className="person-info"
-          style={{ textAlign: "center" }}
+          style={{ textAlign: "center", marginBottom : 15 }}
           key={person._id}
         >
-          <Row justify="space-around" align="middle">
+          <Row justify="space-around" align="middle" >
             <Col span={6}><p>{person.firstName}</p></Col>
             <Col span={6}><p>{person.lastName}</p></Col>
             <Col span={6}>

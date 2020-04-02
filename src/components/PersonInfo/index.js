@@ -17,10 +17,10 @@ export default class PersonInfo extends React.Component {
         return (
             <>
                 <h1>{this.props.person.firstName} {this.props.person.lastName}</h1>
-                <p>email: {this.props.person.email}</p>
-                <p> Рост: {this.props.person.height}</p>
-                <p> Вес: {this.props.person.weight}</p>
-                <p> Возраст:{this.props.person.age}</p>
+                <h4>email: {this.props.person.email}</h4>
+                <h4> Рост: {this.props.person.height}</h4>
+                <h4> Вес: {this.props.person.weight}</h4>
+                <h4> Возраст: {this.props.person.age}</h4>
                 <Button type="primary" size="middle" style={{ margin: "1%" }}>
                     А не пойти бы тебе нахуй
                 </Button>

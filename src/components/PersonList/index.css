@@ -1,5 +1,6 @@
 .person-info {
-    background: rgb(93, 81, 255);
+  background: rgb(2,0,36);
+  background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(92,37,141,1) 0%, rgba(67,137,162,1) 100%);
     padding: 10px 20px;
     display: inline-block;
     color: #fff;
