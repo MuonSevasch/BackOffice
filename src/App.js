@@ -37,7 +37,7 @@ class App extends React.Component {
       Api.getAllLoot("meals").then(result => {
         this.setState({ recipes: result });
       })
-    });
+    })};
 
   updatePersons = () => {
     api.getAllLoot('userForms').then(x =>{ this.setState({persons: x })})
