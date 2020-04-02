@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Modal, Button, Input, Row } from "antd";
 
 import SingleRecipe from "../SingleRecipe";
+import Api from "../../../global/api";
 
 export default class RecipeList extends Component {
   state = {
@@ -11,10 +12,15 @@ export default class RecipeList extends Component {
   };
 
   showModal = recipe => {
+    Api.getLoot(`meals/${recipe._id}`);
     this.setState({
-      visible: true,
-      recipe: recipe
+      visible: true
     });
+  };
+
+  handleDeletion = async recipe => {
+    await Api.deleteLoot(`meals`, recipe._id);
+    this.props.updateFoods();
   };
 
   render() {
@@ -22,7 +28,7 @@ export default class RecipeList extends Component {
     const { search, visible } = this.state;
     const recipeList = recipes
       .filter(recipe => {
-        return recipe.title.toLowerCase().indexOf(search.toLowerCase()) !== -1;
+        return recipe.name.toLowerCase().indexOf(search.toLowerCase()) !== -1;
       })
       .map((recipe, index) => {
         return (
@@ -42,7 +48,13 @@ export default class RecipeList extends Component {
               >
                 Развернуть
               </Button>
-              <Button size="small" type="danger">
+              <Button
+                onClick={() => {
+                  this.handleDeletion(recipe);
+                }}
+                size="small"
+                type="danger"
+              >
                 Удалить рецепт
               </Button>
             </Row>

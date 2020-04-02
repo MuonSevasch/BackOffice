@@ -2,7 +2,6 @@ import React, { Component } from "react";
 
 import { Input, Select, Button, Row } from "antd";
 
-
 import RecipeConstructor from "../RecipeConstructor";
 
 export default class SingleRecipe extends Component {
@@ -10,9 +9,9 @@ export default class SingleRecipe extends Component {
     editFlag: false
   };
 
-  handleEditFlag= () =>{
-      this.setState({editFlag: !this.state.editFlag})
-  }
+  handleEditFlag = () => {
+    this.setState({ editFlag: !this.state.editFlag });
+  };
   render() {
     const { recipe } = this.props;
     const { editFlag } = this.state;
@@ -38,9 +37,11 @@ export default class SingleRecipe extends Component {
               })}
           </div>
         )}
-        {recipe.category.map(el => (
-          <span>{el}</span>
-        ))}
+        <div>
+          {recipe.category.map(el => (
+            <span>{el}</span>
+          ))}
+        </div>
         <Button onClick={this.handleEditFlag}></Button>
       </div>
     );

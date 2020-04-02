@@ -12,7 +12,6 @@ import Api from "./global/api";
 const { Content, Sider } = Layout;
 
 class App extends React.Component {
-
   state = {
     receptVisibility: false,
     collapsed: false,
@@ -26,7 +25,6 @@ class App extends React.Component {
   };
 
   onCollapse = collapsed => {
-
     this.setState({ collapsed });
   };
 
@@ -34,15 +32,16 @@ class App extends React.Component {
     Api.login(this.state.username, this.state.password).then(() => {
       Api.getAllLoot("userForms").then(result => {
         this.setState({ persons: result });
-
       });
+      Api.getAllLoot("meals").then(result => {
+        this.setState({ recipes: result });
+      })
     });
-
   }
 
-  render() {
+  render() { 
     const { recipes, persons } = this.state;
-    console.log(recipes);
+  
     return (
       <Layout style={{ minHeight: "100vh" }}>
         <Sider
