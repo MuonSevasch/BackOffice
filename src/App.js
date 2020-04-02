@@ -4,7 +4,7 @@ import "./index.css";
 import { Layout, Menu } from "antd";
 import { TeamOutlined, ProfileOutlined } from "@ant-design/icons";
 
-import PersonInfo from "./components/PersonInfo";
+import PersonList from "./components/PersonList";
 import Recipe from "./components/Recipe";
 import SignIn from "./components/SignIn";
 import Api from "./global/api";
@@ -34,7 +34,7 @@ class App extends React.Component {
     Api.login(this.state.username, this.state.password).then(() => {
       Api.getAllLoot("userForms").then(result => {
         console.log(result);
-        this.setState({ persons: result.data });
+        this.setState({ persons: result});
         console.log(this.state.persons);
       });
     });
@@ -107,7 +107,7 @@ class App extends React.Component {
               className="site-layout-background"
               style={{ padding: 24, minHeight: 360 }}
             >
-              {this.state.receptVisibility && <PersonInfo persons={persons} />}
+              {this.state.receptVisibility && <PersonList persons={persons} />}
               {this.state.clientsVisibility && <Recipe recipes={recipes} />}
             </div>
           </Content>
