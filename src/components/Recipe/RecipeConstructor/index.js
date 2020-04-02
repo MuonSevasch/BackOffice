@@ -4,7 +4,7 @@ import { Input, Select, Button, Row } from "antd";
 
 import Api from "../../../global/api";
 
-import "./recipe-constructor.css";
+import "../recipe.css";
 const { Option } = Select;
 
 export default class RecipeConstructor extends Component {
@@ -69,7 +69,12 @@ export default class RecipeConstructor extends Component {
 
   handleSubmit = () => {
     const { name, ingridients, category } = this.state;
-    const { recipe, setShowConstructor, handleEditFlag } = this.props;
+    const {
+      recipe,
+      setShowConstructor,
+      handleEditFlag,
+      updateFoods
+    } = this.props;
 
     if (recipe) {
       Api.updateRecipe(`meal/${recipe._id}`, { name, ingridients, category });
@@ -78,6 +83,7 @@ export default class RecipeConstructor extends Component {
       Api.addRecipe("meals", { name, ingridients, category });
       setShowConstructor();
     }
+    updateFoods();
   };
 
   handleChange = (event, index) => {
@@ -108,7 +114,7 @@ export default class RecipeConstructor extends Component {
   };
 
   render() {
-    const { ingridients, food } = this.state;
+    const { ingridients, category, food } = this.state;
 
     const foodOptions = food.map(d => <Option key={d._id}>{d.name}</Option>);
 
@@ -137,6 +143,7 @@ export default class RecipeConstructor extends Component {
                       style={{ width: "60%" }}
                       placeholder="Выберите ингредиент"
                       optionFilterProp="children"
+                      defaultValue={el.product._id}
                       onChange={value => this.changeIngredient(value, index)}
                       filterOption={(input, option) =>
                         option.children
@@ -170,6 +177,7 @@ export default class RecipeConstructor extends Component {
         <Select
           mode="multiple"
           style={{ width: "100%", margin: "1rem 0" }}
+          defaultValue={category.map(el => el)}
           placeholder="Завтрак"
           onChange={this.handleCategory}
         >

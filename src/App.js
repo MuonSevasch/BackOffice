@@ -36,21 +36,25 @@ class App extends React.Component {
       });
       Api.getAllLoot("meals").then(result => {
         this.setState({ recipes: result });
-      })
-    })};
+      });
+    });
+  }
 
   updatePersons = () => {
-    api.getAllLoot('userForms').then(x =>{ this.setState({persons: x })})
-  }
-  
-  updateFoods = () => {
-    api.getAllLoot('meals').then(x =>{ this.setState({recipes: x })})
-  }
-  
-  render() {
+    api.getAllLoot("userForms").then(x => {
+      this.setState({ persons: x });
+    });
+  };
 
+  updateFoods = () => {
+    api.getAllLoot("meals").then(x => {
+      this.setState({ recipes: x });
+    });
+  };
+
+  render() {
     const { recipes, persons } = this.state;
-  
+
     return (
       <Layout style={{ minHeight: "100vh" }}>
         <Sider
@@ -64,14 +68,15 @@ class App extends React.Component {
             onClick={e => {
               e.key === "1"
                 ? this.setState({
-                  receptVisibility: true,
-                  clientsVisibility: false
-                })
+                    receptVisibility: true,
+                    clientsVisibility: false
+                  })
                 : this.setState({
-                  receptVisibility: false,
-                  clientsVisibility: true
-                });
-                this.updatePersons(); this.updateFoods();
+                    receptVisibility: false,
+                    clientsVisibility: true
+                  });
+              this.updatePersons();
+              this.updateFoods();
             }}
             theme="dark"
           >
@@ -93,8 +98,15 @@ class App extends React.Component {
               className="site-layout-background"
               style={{ padding: 24, minHeight: 360 }}
             >
-              {this.state.receptVisibility && <PersonList persons={persons} updatePersons={this.updatePersons}/>}
-              {this.state.clientsVisibility && <Recipe recipes={recipes} />}
+              {this.state.receptVisibility && (
+                <PersonList
+                  persons={persons}
+                  updatePersons={this.updatePersons}
+                />
+              )}
+              {this.state.clientsVisibility && (
+                <Recipe recipes={recipes} updateFoods={this.updateFoods} />
+              )}
             </div>
           </Content>
         </Layout>
