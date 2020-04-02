@@ -3,7 +3,11 @@ import PersonInfo from "../PersonInfo";
 
 import { Button, Divider, Row, Col, Modal, Input } from "antd";
 
-import "./index.css";
+
+import "./index.css"
+
+import api from "../../global/api";
+
 
 class PersonList extends React.Component {
   constructor(props) {
@@ -26,12 +30,20 @@ class PersonList extends React.Component {
       visible: false
     });
   };
-  showModal = pers => {
-    this.setState({
-      visible: true,
-      person: pers
-    });
+
+  showModal = async (pers) => {
+    console.log(pers._id)
+    api.getLoot('userForms', pers._id).then(x => {
+      this.setState({
+        visible: true,
+        person: x
+      })
+    })
+
   };
+
+
+
 
   filterPoets = () => {
     let filteredPoets = this.props.persons;
@@ -42,6 +54,11 @@ class PersonList extends React.Component {
     return filteredPoets;
   };
 
+  deleteOnClick = async (person) => {
+    await api.deleteLoot('userforms', person._id);
+    await this.props.updatePersons()
+  }
+
   render() {
     let parasha = this.filterPoets().map((person, index) => {
       return (
@@ -51,9 +68,9 @@ class PersonList extends React.Component {
           key={person._id}
         >
           <Row justify="space-around" align="middle">
-            <h1>{person.firstName}</h1>
-            <h1>{person.lastName}</h1>
-            <p>
+            <Col span={6}><p>{person.firstName}</p></Col>
+            <Col span={6}><p>{person.lastName}</p></Col>
+            <Col span={6}>
               <Button
                 onClick={() => this.showModal(person)}
                 type="primary"
@@ -62,29 +79,28 @@ class PersonList extends React.Component {
               >
                 Развернуть
               </Button>
-            </p>
-            <Button
-              danger
-              type="primary"
-              size="middle"
-              style={{ margin: "1%" }}
-            >
-              Удалить
-            </Button>
+
+            </Col>
+            <Col span={6}>
+              <Button danger type="primary" size="middle" style={{ margin: "1%" }} onClick={() => { this.deleteOnClick(person) }}>
+                Удалить
+              </Button>
+            </Col>
           </Row>
         </div>
       );
     });
+
+
     return (
       <div style={{ textAlign: "center" }}>
         <Input
           style={{ width: 200, marginBottom: "20px" }}
           value={this.state.search}
-          onChange={e => {
-            console.log(e.target);
-            this.setState({ search: e.target.value });
-          }}
+
+          onChange={(e) => { this.setState({ search: e.target.value }) }}
           placeholder="Поиск"
+
         />
         <Modal
           destroyOnClose={true}
@@ -93,7 +109,8 @@ class PersonList extends React.Component {
           onCancel={this.handleCancel}
           footer={null}
         >
-          <PersonInfo person={this.state.person} />
+            <PersonInfo person={this.state.person} />
+
         </Modal>
         {parasha}
       </div>

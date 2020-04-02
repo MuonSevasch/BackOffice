@@ -8,6 +8,7 @@ import PersonList from "./components/PersonList";
 import Recipe from "./components/Recipe";
 import SignIn from "./components/SignIn";
 import Api from "./global/api";
+import api from "./global/api";
 
 const { Content, Sider } = Layout;
 
@@ -37,9 +38,17 @@ class App extends React.Component {
         this.setState({ recipes: result });
       })
     });
-  }
 
-  render() { 
+  updatePersons = () => {
+    api.getAllLoot('userForms').then(x =>{ this.setState({persons: x })})
+  }
+  
+  updateFoods = () => {
+    api.getAllLoot('meals').then(x =>{ this.setState({recipes: x })})
+  }
+  
+  render() {
+
     const { recipes, persons } = this.state;
   
     return (
@@ -55,13 +64,14 @@ class App extends React.Component {
             onClick={e => {
               e.key === "1"
                 ? this.setState({
-                    receptVisibility: true,
-                    clientsVisibility: false
-                  })
+                  receptVisibility: true,
+                  clientsVisibility: false
+                })
                 : this.setState({
-                    receptVisibility: false,
-                    clientsVisibility: true
-                  });
+                  receptVisibility: false,
+                  clientsVisibility: true
+                });
+                this.updatePersons(); this.updateFoods();
             }}
             theme="dark"
           >
@@ -83,7 +93,7 @@ class App extends React.Component {
               className="site-layout-background"
               style={{ padding: 24, minHeight: 360 }}
             >
-              {this.state.receptVisibility && <PersonList persons={persons} />}
+              {this.state.receptVisibility && <PersonList persons={persons} updatePersons={this.updatePersons}/>}
               {this.state.clientsVisibility && <Recipe recipes={recipes} />}
             </div>
           </Content>
