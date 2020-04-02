@@ -1,7 +1,7 @@
 import React from "react";
 import "antd/dist/antd.css";
 import "./index.css";
-import { Layout, Menu } from "antd";
+import { Layout, Menu, Button } from "antd";
 import { TeamOutlined, ProfileOutlined } from "@ant-design/icons";
 
 import SignIn from "./components/SignIn";
@@ -59,6 +59,7 @@ class App extends React.Component {
     const { persons, signedIn } = this.state;
 
     return (
+
       <>
         {!signedIn && <SignIn setLoginStatus={this.setLoginStatus} />}
         {signedIn && (
@@ -116,6 +117,7 @@ class App extends React.Component {
           </Layout>
         )}
       </>
+
     );
   }
 }

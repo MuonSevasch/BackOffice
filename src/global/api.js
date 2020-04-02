@@ -97,6 +97,7 @@ class Api {
   }
 
   async addLoot(root, info) {
+
     let data = {};
     await axios
       .post(`${baseURL}/${root}`, info)
@@ -109,6 +110,8 @@ class Api {
       });
     return data;
   }
+
+
 
   async updateLoot(root, info, id) {
     let data = {};

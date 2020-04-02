@@ -4,6 +4,8 @@ import { Modal, Button, Input, Row } from "antd";
 import SingleRecipe from "../SingleRecipe";
 import Api from "../../../global/api";
 
+import "../../PersonList/index.css"
+
 export default class RecipeList extends Component {
   state = {
     search: "",
@@ -44,7 +46,7 @@ export default class RecipeList extends Component {
         return (
           <div
             className="person-info"
-            style={{ textAlign: "center" }}
+            style={{ textAlign: "center", marginBottom : 15 }}
             key={index}
           >
             <Row justify="space-around" align="middle">
