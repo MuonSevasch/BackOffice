@@ -1,6 +1,8 @@
 import React from "react";
 import PersonInfo from "../PersonInfo"
+
 import { Button, Divider, Row, Col, Modal, Input } from "antd";
+
 import "./index.css"
 
 
@@ -9,25 +11,29 @@ class PersonList extends React.Component {
     super(props)
     this.state = {
       search: "",
-      visible: false
+      visible: false,
+      person: null,
     }
   }
+
+
   handleCancel = () => {
     this.setState({
-        visible: false
+      visible: false
     });
-};
+  };
 
-handleOk = () => {
+  handleOk = () => {
     this.setState({
-        visible: false
+      visible: false
     });
-};
-showModal = () => {
+  };
+  showModal = (pers) => {
     this.setState({
-        visible: true
+      visible: true,
+      person: pers,
     });
-};
+  };
 
   filterPoets = () => {
     let filteredPoets = this.props.persons
@@ -36,48 +42,50 @@ showModal = () => {
       return poetName.indexOf(
         this.state.search.toLowerCase()) !== -1
     })
-    return(
+    return (
       filteredPoets
     )
   }
 
   render() {
     let parasha = this.filterPoets().map((person, index) => {
-      return ( 
-      <div className="person-info" style={{ textAlign: "center" }}  key={person._id}>
-      <Row justify="space-around" align="middle">
-          <h1>{person.firstName}</h1>
-          <h1>{person.lastName}</h1>
-          <p>
+      return (
+        <div className="person-info" style={{ textAlign: "center" }} key={person._id}>
+          <Row justify="space-around" align="middle">
+            <h1>{person.firstName}</h1>
+            <h1>{person.lastName}</h1>
+            <p>
               <Button
-                  onClick={this.showModal}
-                  type="primary"
-                  size="middle"
-                  style={{ margin: "1%" }}
+                onClick={()=> this.showModal(person)}
+                type="primary"
+                size="middle"
+                style={{ margin: "1%" }}
               >
-                  Развернуть
+                Развернуть
           </Button>
-          </p>
-          <Button danger type="primary" size="middle" style={{ margin: "1%" }}>
+            </p>
+            <Button danger type="primary" size="middle" style={{ margin: "1%" }}>
               Удалить
       </Button>
-      </Row>
-  </div>
-    )});
+          </Row>
+        </div>
+      )
+    });
     return (
-      <div style={{textAlign:"center"}}>
-        <Input  style={{ width: 200, marginBottom: "20px"}}
+      <div style={{ textAlign: "center" }}>
+        <Input style={{ width: 200, marginBottom: "20px" }}
           value={this.state.search}
-          onChange={(e) => {console.log(e.target); this.setState({ search: e.target.value })}}
-          placeholder ="Имя"
+          onChange={(e) => { console.log(e.target); this.setState({ search: e.target.value }) }}
+          placeholder="Имя"
         />
         <Modal
-              visible={this.state.visible}
-              onOk={this.handleOk}
-              onCancel={this.handleCancel}
-              footer={ null}
-          ><PersonInfo person = {this.state.person}/>
-          </Modal>
+        destroyOnClose= {true}
+          visible={this.state.visible}
+          onOk={this.handleOk}
+          onCancel={this.handleCancel}
+          footer={null}
+        ><PersonInfo person ={this.state.person} />
+        </Modal>
         {parasha}
       </div>
     )
