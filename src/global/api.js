@@ -17,6 +17,21 @@ class Api {
     return data;
   }
 
+  async logout() {
+    let data = {};
+    await axios
+      .post(`${baseURL}/logout`)
+      .then(response => {
+        data = response.data;
+        console.log(response);
+      })
+      .catch(error => {
+        console.log(error);
+      });
+    return data;
+  }
+
+
   async getAllLoot(route) {
     let allLoot = [];
     await axios
