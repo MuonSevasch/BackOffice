@@ -1,7 +1,8 @@
 import React from "react";
 import PersonInfo from "../PersonInfo"
-import { Input } from 'antd';
-import { Button, Divider, Row, Col, Modal } from "antd";
+
+import { Button, Divider, Row, Col, Modal, Input } from "antd";
+
 import "./index.css"
 
 
@@ -45,8 +46,6 @@ class PersonList extends React.Component {
       filteredPoets
     )
   }
-
-
 
   render() {
     let parasha = this.filterPoets().map((person, index) => {

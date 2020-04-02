@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Button, Input } from "antd";
+import { Modal, Button, Input } from "antd";
 
 export default class RecipeList extends Component {
   state = {
@@ -20,6 +20,16 @@ export default class RecipeList extends Component {
         <Button onClick={setShowConstructor} type="primary">
           Добавить рецепт
         </Button>
+
+        <Modal
+          centered={true}
+          destroyOnClose={true}
+          visible={this.state.showConstructor}
+          onOk={this.setShowConstructor}
+          onCancel={this.setShowConstructor}
+          okText="Подтвердить"
+          cancelText="Отмена"
+        ></Modal>
 
         <Input
           value={this.state.search}

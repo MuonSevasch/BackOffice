@@ -34,7 +34,9 @@ class App extends React.Component {
     Api.login(this.state.username, this.state.password).then(() => {
       Api.getAllLoot("userForms").then(result => {
         console.log(result);
-        this.setState({ persons: result});
+
+        this.setState({ persons: result });
+
         console.log(this.state.persons);
       });
     });
