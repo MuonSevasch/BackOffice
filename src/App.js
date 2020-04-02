@@ -16,7 +16,7 @@ class App extends React.Component {
   state = {
     receptVisibility: false,
     collapsed: false,
-    isLoaded: false,
+    loading: false,
     error: null,
     persons: [],
     recipes: [],
@@ -26,43 +26,18 @@ class App extends React.Component {
   };
 
   onCollapse = collapsed => {
-    console.log(collapsed);
+
     this.setState({ collapsed });
   };
 
   componentDidMount() {
     Api.login(this.state.username, this.state.password).then(() => {
       Api.getAllLoot("userForms").then(result => {
-        console.log(result);
-
         this.setState({ persons: result });
 
-        console.log(this.state.persons);
       });
     });
-    // axios
-    //   .post("http://25.48.59.169:8080/api/login", {
-    //     username: this.state.username,
-    //     password: this.state.password
-    //   })
-    //   .then(res => {
-    //     console.log(res);
-    //     axios.get("http://25.48.59.169:8080/api/users").then(
-    //       result => {
-    //         console.log(result);
-    //         this.setState({ persons: result.data });
-    //         console.log(this.state.persons);
-    //       },
-    //       error => {
-    //         this.setState({
-    //           isLoaded: true,
-    //           error
-    //         });
 
-    //         console.log(error);
-    //       }
-    //     );
-    //   });
   }
 
   render() {

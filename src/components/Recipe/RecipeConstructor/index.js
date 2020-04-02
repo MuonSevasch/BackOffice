@@ -1,11 +1,11 @@
 import React, { Component } from "react";
 
-import { Input, Select, Button } from "antd";
+import { Input, Select, Button, Row } from "antd";
 
 import Api from "../../../global/api";
-const { Option } = Select;
 
-//сделать добавление мультипл селект+кол-во инпутов, допилить ресипи лист.
+import "./recipe-constructor.css";
+const { Option } = Select;
 
 export default class RecipeConstructor extends Component {
   constructor(props) {
@@ -48,124 +48,145 @@ export default class RecipeConstructor extends Component {
     });
   };
 
-  changeIngredient = (product, event) => {
+  changeIngredient = (value, index) => {
+    console.log(value);
     const { ingridients } = this.state;
 
-    let newIngredients = ingridients.map(ingredient =>
-      product === ingredient.product
-        ? {
-            ...ingredient,
-            product: {
-              ...ingredient.product,
-              product: event.target.value
-            }
-          }
-        : ingredient
+    let newIngredients = ingridients.map((ingredient, i) =>
+      i === index ? { ...ingredient, product: value } : ingredient
     );
 
     this.setState({
-      choices: newIngredients
+      ingridients: newIngredients
     });
   };
 
-  handleChange = event => {
-    const { ingridients, category } = this.state;
+  handleCategory = value => {
+    this.setState({
+      category: value
+    });
+  };
+
+  handleSubmit = () => {
+    const { name, ingridients, category } = this.state;
+    const { recipe, setShowConstructor, handleEditFlag } = this.props;
+
+    if (recipe) {
+      Api.updateRecipe(`meal/${recipe._id}`, { name, ingridients, category });
+      handleEditFlag();
+    } else {
+      Api.addRecipe("meals", { name, ingridients, category });
+      setShowConstructor();
+    }
+  };
+
+  handleChange = (event, index) => {
+    const { ingridients } = this.state;
     switch (event.target.name) {
       case "name":
         this.setState({ [event.target.name]: event.target.value });
         break;
 
       case "amount":
+        if (!event.target.value.match(/^[0-9]*$/)) {
+          break;
+        }
+        let newIngredients = ingridients.map((ingredient, i) =>
+          i === index
+            ? { ...ingredient, amount: event.target.value }
+            : ingredient
+        );
+
         this.setState({
-          ingridients: [
-            ...ingridients,
-            {
-              amount: event.target.value
-            }
-          ]
+          ingridients: newIngredients
         });
         break;
-      case "category":
-        this.setState({
-          [event.target.value]: [...category, event.target.value]
-        });
-        break;
+
       default:
         return;
     }
   };
-  handleSelect = value => {
-    console.log(value);
-    const { ingridients } = this.state;
-    this.setState({
-      ingridients: [...ingridients, { product: value }]
-    });
-  };
 
   render() {
-    const { showConstructor, setShowConstructor, recipe } = this.props;
     const { ingridients, food } = this.state;
-    console.log(ingridients);
-    const options = food.map(d => <Option key={d._id}>{d.name}</Option>);
-    return (
-      <div>
-        <Input
-          style={{ width: 200, marginBottom: "20px" }}
-          name="name"
-          value={this.state.name}
-          onChange={this.handleChange}
-          placeholder="Имя"
-        />
-        <Button onClick={this.addIngredient}>Добавить ингредиент</Button>
-        <div>
-          {ingridients.length !== 0 &&
-            ingridients.map((el, index) => {
-              return (
-                <ul className="list-container" key={index}>
-                  <div>
-                    <div className="select-container">
-                      <Select
-                        showSearch
-                        name="ingridient"
-                        style={{ width: 200 }}
-                        placeholder="Выберите ингредиент"
-                        optionFilterProp="children"
-                        onChange={this.handleSelect}
-                        filterOption={(input, option) =>
-                          option.children
-                            .toLowerCase()
-                            .indexOf(input.toLowerCase()) >= 0
-                        }
-                      >
-                        {options}
-                      </Select>
-                    </div>
-                    <div className="input-container">
-                      <Input
-                        style={{ width: 200, marginBottom: "20px" }}
-                        name="amount"
-                        value={el.amount}
-                        onChange={this.handleChange}
-                        placeholder="100"
-                      />
-                    </div>
-                    <Button onClick={() => this.deleteIngredient(index)}>
-                      Удалить ингредиент
-                    </Button>
-                  </div>
-                </ul>
-              );
-            })}
-        </div>
 
-        {/* 
+    const foodOptions = food.map(d => <Option key={d._id}>{d.name}</Option>);
+
+    return (
+      <div className="constructor-container">
+        <div className="input-container">
           <Input
             style={{ width: 200, marginBottom: "20px" }}
-            name="amount"
-            value={this.state.amount}
+            name="name"
+            value={this.state.name}
             onChange={this.handleChange}
-            placeholder="Количество"
-          /> */}
+            placeholder="Название рецепта"
+          />
+        </div>
+        <Button onClick={this.addIngredient}>Добавить ингредиент</Button>
+
+        <Row justify="space-around" align="middle">
+          <ul className="ul-container">
+            {ingridients.length !== 0 &&
+              ingridients.map((el, index) => {
+                return (
+                  <li className="li-container" key={index}>
+                    <Select
+                      showSearch
+                      name="ingridient"
+                      style={{ width: "60%" }}
+                      placeholder="Выберите ингредиент"
+                      optionFilterProp="children"
+                      onChange={value => this.changeIngredient(value, index)}
+                      filterOption={(input, option) =>
+                        option.children
+                          .toLowerCase()
+                          .indexOf(input.toLowerCase()) >= 0
+                      }
+                    >
+                      {foodOptions}
+                    </Select>
+
+                    <Input
+                      style={{ width: "20%" }}
+                      name="amount"
+                      value={el.amount}
+                      onChange={event => this.handleChange(event, index)}
+                      placeholder="100"
+                    />
+
+                    <Button
+                      style={{ width: "20%" }}
+                      onClick={() => this.deleteIngredient(index)}
+                    >
+                      Удалить
+                    </Button>
+                  </li>
+                );
+              })}
+          </ul>
+        </Row>
+
+        <Select
+          mode="multiple"
+          style={{ width: "100%", margin: "1rem 0" }}
+          placeholder="Завтрак"
+          onChange={this.handleCategory}
+        >
+          <Option value="breakfast">Завтрак</Option>
+          <Option value="lunch">Обед</Option>
+          <Option value="dinner">Ужин</Option>
+          <Option value="snack">Перекус</Option>
+        </Select>
+
+        <Button
+          onClick={this.handleSubmit}
+          type="primary"
+          size="middle"
+          style={{ margin: "1%" }}
+        >
+          Подтвердить
+        </Button>
       </div>
     );
   }
