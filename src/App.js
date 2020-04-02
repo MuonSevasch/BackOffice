@@ -73,7 +73,7 @@ class App extends React.Component {
               <div className="logo" />
               <Menu
                 onClick={e => {
-                  e.key === "1"
+                  e.key === "2"
                     ? this.setState({
                         receptVisibility: true,
                         clientsVisibility: false
