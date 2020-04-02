@@ -5,6 +5,7 @@ import { Button, Divider, Row, Col, Modal, Input } from "antd";
 
 import "./index.css"
 
+import api from "../../global/api";
 
 class PersonList extends React.Component {
   constructor(props) {
@@ -84,7 +85,7 @@ class PersonList extends React.Component {
           onOk={this.handleOk}
           onCancel={this.handleCancel}
           footer={null}
-        ><PersonInfo person ={this.state.person} />
+        ><PersonInfo person ={api.getLoot('userForms', this.props.person)} />
         </Modal>
         {parasha}
       </div>

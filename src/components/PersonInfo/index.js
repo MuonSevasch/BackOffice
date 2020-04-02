@@ -14,14 +14,14 @@ export default class PersonInfo extends React.Component {
 
 
     componentDidMount() {
-        this.setState({ person : api.getLoot('userForms', this.props.person._id) }); 
+        this.setState({ person : api.getLoot('userForms', this.props.person) }); 
     }
 
     render() {
         console.log(this.props.person)
         return (
             <>
-            <h1></h1>
+            <h1>{this.props.person.firstName}</h1>
                 <Button type="primary" size="middle" style={{ margin: "1%" }}>
                     А не пойти бы тебе нахуй
                 </Button>
