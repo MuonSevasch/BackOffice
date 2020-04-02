@@ -4,7 +4,7 @@ import { Input, Select, Button, Row } from "antd";
 
 import Api from "../../../global/api";
 
-import "./recipe-constructor.css";
+import "../recipe.css";
 const { Option } = Select;
 
 export default class RecipeConstructor extends Component {
@@ -69,7 +69,12 @@ export default class RecipeConstructor extends Component {
 
   handleSubmit = () => {
     const { name, ingridients, category } = this.state;
-    const { recipe, setShowConstructor, handleEditFlag } = this.props;
+    const {
+      recipe,
+      setShowConstructor,
+      handleEditFlag,
+      updateFoods
+    } = this.props;
 
     if (recipe) {
       Api.updateRecipe(`meal/${recipe._id}`, { name, ingridients, category });
@@ -78,6 +83,7 @@ export default class RecipeConstructor extends Component {
       Api.addRecipe("meals", { name, ingridients, category });
       setShowConstructor();
     }
+    updateFoods();
   };
 
   handleChange = (event, index) => {

@@ -14,7 +14,7 @@ export default class Recipe extends Component {
   };
 
   render() {
-    const { loading, error, recipes } = this.props;
+    const { loading, error, recipes, updateFoods } = this.props;
     return (
       <>
         {error && (
@@ -47,10 +47,12 @@ export default class Recipe extends Component {
               <RecipeConstructor
                 showConstructor={this.state.showConstructor}
                 setShowConstructor={this.setShowConstructor}
+                updateFoods={updateFoods}
               />
             </Modal>
             <RecipeList
               recipes={recipes}
+              updateFoods={updateFoods}
               setShowConstructor={this.setShowConstructor}
             />
           </div>

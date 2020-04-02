@@ -12,9 +12,11 @@ export default class RecipeList extends Component {
   };
 
   showModal = recipe => {
-    Api.getLoot(`meals/${recipe._id}`);
-    this.setState({
-      visible: true
+    Api.getLoot(`meals`, recipe._id).then(loot => {
+      this.setState({
+        visible: true,
+        recipe: loot
+      });
     });
   };
 
