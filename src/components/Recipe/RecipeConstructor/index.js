@@ -73,17 +73,24 @@ export default class RecipeConstructor extends Component {
       recipe,
       setShowConstructor,
       handleEditFlag,
-      updateFoods
+      updateFoods,
+      updateRecipe
     } = this.props;
 
     if (recipe) {
-      Api.updateRecipe(`meal/${recipe._id}`, { name, ingridients, category });
+      Api.updateRecipe(
+        `meals`,
+        { name, ingridients, category },
+        recipe._id
+      ).then(e => updateRecipe(recipe._id));
+      updateFoods();
       handleEditFlag();
     } else {
-      Api.addRecipe("meals", { name, ingridients, category });
+      Api.addRecipe("meals", { name, ingridients, category }).then(e =>
+        updateFoods()
+      );
       setShowConstructor();
     }
-    updateFoods();
   };
 
   handleChange = (event, index) => {
