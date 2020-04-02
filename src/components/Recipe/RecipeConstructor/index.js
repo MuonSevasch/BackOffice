@@ -114,7 +114,7 @@ export default class RecipeConstructor extends Component {
   };
 
   render() {
-    const { ingridients, food } = this.state;
+    const { ingridients, category, food } = this.state;
 
     const foodOptions = food.map(d => <Option key={d._id}>{d.name}</Option>);
 
@@ -143,6 +143,7 @@ export default class RecipeConstructor extends Component {
                       style={{ width: "60%" }}
                       placeholder="Выберите ингредиент"
                       optionFilterProp="children"
+                      defaultValue={el.product._id}
                       onChange={value => this.changeIngredient(value, index)}
                       filterOption={(input, option) =>
                         option.children
@@ -176,6 +177,7 @@ export default class RecipeConstructor extends Component {
         <Select
           mode="multiple"
           style={{ width: "100%", margin: "1rem 0" }}
+          defaultValue={category.map(el => el)}
           placeholder="Завтрак"
           onChange={this.handleCategory}
         >
