@@ -1,7 +1,6 @@
 import React from "react";
 import { Button, Divider, Row, Col, Modal } from "antd"
 import "../../global/api"
-import api from "../../global/api";
 
 
 export default class PersonInfo extends React.Component {
@@ -13,15 +12,15 @@ export default class PersonInfo extends React.Component {
     }
 
 
-    componentDidMount() {
-        this.setState({ person : api.getLoot('userForms', this.props.person) }); 
-    }
 
     render() {
-        console.log(this.props.person)
         return (
             <>
-            <h1>{this.props.person.firstName}</h1>
+                <h1>{this.props.person.firstName} {this.props.person.lastName}</h1>
+                <p>email: {this.props.person.email}</p>
+                <p> Рост: {this.props.person.height}</p>
+                <p> Вес: {this.props.person.weight}</p>
+                <p> Возраст:{this.props.person.age}</p>
                 <Button type="primary" size="middle" style={{ margin: "1%" }}>
                     А не пойти бы тебе нахуй
                 </Button>

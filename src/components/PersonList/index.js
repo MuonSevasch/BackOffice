@@ -29,12 +29,18 @@ class PersonList extends React.Component {
       visible: false
     });
   };
-  showModal = (pers) => {
-    this.setState({
-      visible: true,
-      person: pers,
-    });
+  showModal = async (pers) => {
+    console.log(pers._id)
+    api.getLoot('userForms', pers._id).then(x => {
+      this.setState({
+        visible: true,
+        person: x
+      })
+    })
   };
+
+
+
 
   filterPoets = () => {
     let filteredPoets = this.props.persons
@@ -48,44 +54,53 @@ class PersonList extends React.Component {
     )
   }
 
+  deleteOnClick = async (person) => {
+    await api.deleteLoot('userforms', person._id);
+    await this.props.updatePersons()
+  }
+
   render() {
     let parasha = this.filterPoets().map((person, index) => {
       return (
         <div className="person-info" style={{ textAlign: "center" }} key={person._id}>
           <Row justify="space-around" align="middle">
-            <h1>{person.firstName}</h1>
-            <h1>{person.lastName}</h1>
-            <p>
+            <Col span={6}><p>{person.firstName}</p></Col>
+            <Col span={6}><p>{person.lastName}</p></Col>
+            <Col span={6}>
               <Button
-                onClick={()=> this.showModal(person)}
+                onClick={() => this.showModal(person)}
                 type="primary"
                 size="middle"
                 style={{ margin: "1%" }}
               >
                 Развернуть
-          </Button>
-            </p>
-            <Button danger type="primary" size="middle" style={{ margin: "1%" }}>
-              Удалить
-      </Button>
+              </Button>
+            </Col>
+            <Col span={6}>
+              <Button danger type="primary" size="middle" style={{ margin: "1%" }} onClick={() => { this.deleteOnClick(person) }}>
+                Удалить
+              </Button>
+            </Col>
           </Row>
         </div>
       )
     });
+
+
     return (
       <div style={{ textAlign: "center" }}>
         <Input style={{ width: 200, marginBottom: "20px" }}
           value={this.state.search}
-          onChange={(e) => { console.log(e.target); this.setState({ search: e.target.value }) }}
+          onChange={(e) => { this.setState({ search: e.target.value }) }}
           placeholder="Имя"
         />
         <Modal
-        destroyOnClose= {true}
+          destroyOnClose={true}
           visible={this.state.visible}
           onOk={this.handleOk}
           onCancel={this.handleCancel}
           footer={null}
-        ><PersonInfo person ={api.getLoot('userForms', this.props.person)} />
+        ><PersonInfo person={this.state.person} />
         </Modal>
         {parasha}
       </div>
