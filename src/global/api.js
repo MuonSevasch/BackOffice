@@ -81,7 +81,7 @@ class Api {
     return allLoot;
   }
 
-  async addRecipe(root, info) {
+  async addLoot(root, info) {
     let data = {};
     await axios
       .post(`${baseURL}/${root}`, info)
@@ -95,7 +95,7 @@ class Api {
     return data;
   }
 
-  async updateRecipe(root, info, id) {
+  async updateLoot(root, info, id) {
     let data = {};
     await axios
       .put(`${baseURL}/${root}/${id}`, info)

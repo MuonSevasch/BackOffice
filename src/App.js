@@ -8,7 +8,7 @@ import PersonList from "./components/PersonList";
 import Recipe from "./components/Recipe";
 import SignIn from "./components/SignIn";
 import Api from "./global/api";
-import api from "./global/api";
+
 
 const { Content, Sider } = Layout;
 
@@ -19,7 +19,7 @@ class App extends React.Component {
     loading: false,
     error: null,
     persons: [],
-    recipes: [],
+   
     clientsVisibility: false,
     username: "test-user",
     password: "my-password"
@@ -34,26 +34,18 @@ class App extends React.Component {
       Api.getAllLoot("userForms").then(result => {
         this.setState({ persons: result });
       });
-      Api.getAllLoot("meals").then(result => {
-        this.setState({ recipes: result });
-      });
+     
     });
   }
 
   updatePersons = () => {
-    api.getAllLoot("userForms").then(x => {
+    Api.getAllLoot("userForms").then(x => {
       this.setState({ persons: x });
     });
   };
 
-  updateFoods = () => {
-    api.getAllLoot("meals").then(x => {
-      this.setState({ recipes: x });
-    });
-  };
-
   render() {
-    const { recipes, persons } = this.state;
+    const { persons } = this.state;
 
     return (
       <Layout style={{ minHeight: "100vh" }}>
@@ -76,7 +68,6 @@ class App extends React.Component {
                     clientsVisibility: true
                   });
               this.updatePersons();
-              this.updateFoods();
             }}
             theme="dark"
           >
@@ -105,7 +96,7 @@ class App extends React.Component {
                 />
               )}
               {this.state.clientsVisibility && (
-                <Recipe recipes={recipes} updateFoods={this.updateFoods} />
+                <Recipe  />
               )}
             </div>
           </Content>

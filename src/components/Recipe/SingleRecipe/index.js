@@ -6,6 +6,13 @@ import RecipeConstructor from "../RecipeConstructor";
 
 import "../recipe.css";
 
+const mealCategories = [
+  { breakfast: "Завтрак" },
+  { lunch: "Обед" },
+  { dinner: "Ужин" },
+  { snack: "Перекус" }
+];
+
 export default class SingleRecipe extends Component {
   state = {
     editFlag: false
@@ -46,7 +53,7 @@ export default class SingleRecipe extends Component {
             </ul>
             <div>
               {recipe.category.map((el, i) => (
-                <span key={i}>{el}</span>
+                <span key={i}>{mealCategories[el]}</span>
               ))}
             </div>
             <Button onClick={this.handleEditFlag}>Редактировать</Button>

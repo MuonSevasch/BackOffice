@@ -78,7 +78,7 @@ export default class RecipeConstructor extends Component {
     } = this.props;
 
     if (recipe) {
-      Api.updateRecipe(
+      Api.updateLoot(
         `meals`,
         { name, ingridients, category },
         recipe._id
@@ -86,7 +86,7 @@ export default class RecipeConstructor extends Component {
       updateFoods();
       handleEditFlag();
     } else {
-      Api.addRecipe("meals", { name, ingridients, category }).then(e =>
+      Api.addLoot("meals", { name, ingridients, category }).then(e =>
         updateFoods()
       );
       setShowConstructor();
