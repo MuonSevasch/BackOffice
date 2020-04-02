@@ -17,6 +17,21 @@ class Api {
     return data;
   }
 
+  async logout() {
+    let data = {};
+    await axios
+      .post(`${baseURL}/logout`)
+      .then(response => {
+        data = response.data;
+        console.log(response);
+      })
+      .catch(error => {
+        console.log(error);
+      });
+    return data;
+  }
+
+
   async getAllLoot(route) {
     let allLoot = [];
     await axios
@@ -82,6 +97,7 @@ class Api {
   }
 
   async addLoot(root, info) {
+
     let data = {};
     await axios
       .post(`${baseURL}/${root}`, info)
@@ -95,21 +111,9 @@ class Api {
     return data;
   }
 
-  async addRecipe(root, info) {
-    let data = {};
-    await axios
-      .post(`${baseURL}/${root}`, info)
-      .then(response => {
-        data = response.data;
-        console.log(response);
-      })
-      .catch(error => {
-        console.log(error);
-      });
-    return data;
-  }
 
-  async updateRecipe(root, info, id) {
+
+  async updateLoot(root, info, id) {
     let data = {};
     await axios
       .put(`${baseURL}/${root}/${id}`, info)

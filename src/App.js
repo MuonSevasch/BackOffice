@@ -4,25 +4,37 @@ import "./index.css";
 import { Layout, Menu, Button } from "antd";
 import { TeamOutlined, ProfileOutlined } from "@ant-design/icons";
 
+import SignIn from "./components/SignIn";
 import PersonList from "./components/PersonList";
 import Recipe from "./components/Recipe";
-import SignIn from "./components/SignIn";
+
 import Api from "./global/api";
-import api from "./global/api";
 
 const { Content, Sider } = Layout;
 
 class App extends React.Component {
   state = {
+    signedIn: localStorage.signedIn ? localStorage.signedIn : false,
     receptVisibility: false,
     collapsed: false,
     loading: false,
     error: null,
     persons: [],
-    recipes: [],
-    clientsVisibility: false,
+
+    clientsVisibility: true,
     username: "test-user",
     password: "my-password"
+  };
+
+  setLoginStatus = () => {
+    this.setState({ signedIn: true });
+  };
+
+  logout = () => {
+    Api.logout().then(res => {
+      localStorage.removeItem("signedIn");
+      
+    });
   };
 
   onCollapse = collapsed => {
@@ -30,85 +42,82 @@ class App extends React.Component {
   };
 
   componentDidMount() {
-    Api.login(this.state.username, this.state.password).then(() => {
-      Api.getAllLoot("userForms").then(result => {
-        this.setState({ persons: result });
-      });
-      Api.getAllLoot("meals").then(result => {
-        this.setState({ recipes: result });
-      });
+    // Api.login(this.state.username, this.state.password).then(() => {
+    Api.getAllLoot("userForms").then(result => {
+      this.setState({ persons: result });
     });
+    // });
   }
 
   updatePersons = () => {
-    api.getAllLoot("userForms").then(x => {
+    Api.getAllLoot("userForms").then(x => {
       this.setState({ persons: x });
     });
   };
 
-  updateFoods = () => {
-    api.getAllLoot("meals").then(x => {
-      this.setState({ recipes: x });
-    });
-  };
-
   render() {
-    const { recipes, persons } = this.state;
+    const { persons, signedIn } = this.state;
 
     return (
-      <Layout style={{ minHeight: "100vh" }}>
-        <Sider
-          collapsed={this.state.collapsed}
-          onCollapse={this.onCollapse}
-          width="12.5rm"
-          collapsible={false}
-        >
-          <div className="logo" />
-          <Menu
-            onClick={e => {
-              e.key === "1"
-                ? this.setState({
-                    receptVisibility: true,
-                    clientsVisibility: false
-                  })
-                : this.setState({
-                    receptVisibility: false,
-                    clientsVisibility: true
-                  });
-            }}
-            theme="dark"
-          >
-            <Menu.Item key="1">
-              <TeamOutlined />
-              <span>Заказы</span>
-            </Menu.Item>
 
-            <Menu.Item key="2">
-              <ProfileOutlined />
-              <span>Рецепты</span>
-            </Menu.Item>
-          </Menu>
-        </Sider>
+      <>
+        {!signedIn && <SignIn setLoginStatus={this.setLoginStatus} />}
+        {signedIn && (
+          <Layout style={{ minHeight: "100vh" }}>
+            <Sider
+              collapsed={this.state.collapsed}
+              onCollapse={this.onCollapse}
+              width="12.5rm"
+              collapsible={false}
+            >
+              <div className="logo" />
+              <Menu
+                onClick={e => {
+                  e.key === "1"
+                    ? this.setState({
+                        receptVisibility: true,
+                        clientsVisibility: false
+                      })
+                    : this.setState({
+                        receptVisibility: false,
+                        clientsVisibility: true
+                      });
+                  this.updatePersons();
+                }}
+                theme="dark"
+              >
+                <Menu.Item key="1">
+                  <TeamOutlined />
+                  <span>Заказы</span>
+                </Menu.Item>
 
-        <Layout className="site-layout">
-          <Content style={{ margin: "0 16px" }}>
-            <div
-              className="site-layout-background"
-              style={{ padding: 24, minHeight: 360 }}
-            ><Button type="primary" onClick={() => {this.updatePersons(); this.updateFoods();}}>Миха лох</Button>
-              {this.state.receptVisibility && (
-                <PersonList
-                  persons={persons}
-                  updatePersons={this.updatePersons}
-                />
-              )}
-              {this.state.clientsVisibility && (
-                <Recipe recipes={recipes} updateFoods={this.updateFoods} />
-              )}
-            </div>
-          </Content>
-        </Layout>
-      </Layout>
+                <Menu.Item key="2">
+                  <ProfileOutlined />
+                  <span>Рецепты</span>
+                </Menu.Item>
+              </Menu>
+            </Sider>
+
+            <Layout className="site-layout">
+              <Content style={{ margin: "0 16px" }}>
+                <div
+                  className="site-layout-background"
+                  style={{ padding: 24, minHeight: 360 }}
+                >
+                  {this.state.clientsVisibility && (
+                    <PersonList
+                      persons={persons}
+                      updatePersons={this.updatePersons}
+                    />
+                  )}
+                  {this.state.receptVisibility && <Recipe />}
+                </div>
+              </Content>
+            </Layout>
+          </Layout>
+        )}
+      </>
+
     );
   }
 }

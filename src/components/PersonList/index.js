@@ -1,7 +1,7 @@
 import React from "react";
 import PersonInfo from "../PersonInfo";
 
-import { Button, Divider, Row, Col, Modal, Input } from "antd";
+import { Button,  Row, Col, Modal, Input } from "antd";
 
 
 import "./index.css"
