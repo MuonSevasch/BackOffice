@@ -1,7 +1,7 @@
 import React from "react";
 import "antd/dist/antd.css";
 import "./index.css";
-import { Layout, Menu } from "antd";
+import { Layout, Menu, Button } from "antd";
 import { TeamOutlined, ProfileOutlined } from "@ant-design/icons";
 
 import PersonList from "./components/PersonList";
@@ -75,8 +75,6 @@ class App extends React.Component {
                     receptVisibility: false,
                     clientsVisibility: true
                   });
-              this.updatePersons();
-              this.updateFoods();
             }}
             theme="dark"
           >
@@ -97,7 +95,7 @@ class App extends React.Component {
             <div
               className="site-layout-background"
               style={{ padding: 24, minHeight: 360 }}
-            >
+            ><Button type="primary" onClick={() => {this.updatePersons(); this.updateFoods();}}>Миха лох</Button>
               {this.state.receptVisibility && (
                 <PersonList
                   persons={persons}

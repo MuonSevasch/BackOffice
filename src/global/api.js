@@ -81,6 +81,20 @@ class Api {
     return allLoot;
   }
 
+  async addLoot(root, info) {
+    let data = {};
+    await axios
+      .post(`${baseURL}/${root}`, info)
+      .then(response => {
+        data = response.data;
+        console.log(response);
+      })
+      .catch(error => {
+        console.log(error);
+      });
+    return data;
+  }
+
   async addRecipe(root, info) {
     let data = {};
     await axios
