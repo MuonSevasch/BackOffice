@@ -38,22 +38,23 @@ export default class SingleRecipe extends Component {
         )}
         {!editFlag && (
           <div>
-            <span>{recipe.name}</span>
+            <h4>{recipe.name}</h4>
             <ul className="ul-container">
               {recipe.ingridients.length !== 0 &&
                 recipe.ingridients.map((el, index) => {
                   console.log(el);
                   return (
                     <li className="li-container" key={index}>
-                      <span>{el.product.name}</span>
-                      <span>{el.amount}</span>
+                      <h4>
+                        {el.product.name}: {el.amount}
+                      </h4>
                     </li>
                   );
                 })}
             </ul>
             <div>
               {recipe.category.map((el, i) => (
-                <span key={i}>{mealCategories[el]}</span>
+                <h4 key={i}>{mealCategories[el]}</h4>
               ))}
             </div>
             <Button onClick={this.handleEditFlag}>Редактировать</Button>
