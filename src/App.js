@@ -50,14 +50,9 @@ class App extends React.Component {
         {!signedIn && <SignIn setLoginStatus={this.setLoginStatus} />}
         {signedIn && (
           <Layout style={{ minHeight: "100vh" }}>
-            <Sider
-              collapsed={this.state.collapsed}
-              onCollapse={this.onCollapse}
-              width="12.5rm"
-              collapsible={false}
-            >
+            
               <div className="logo" />
-              <Menu
+              <Menu mode="horizontal"
                 onClick={e => {
                   e.key === "2"
                     ? this.setState({
@@ -81,7 +76,6 @@ class App extends React.Component {
                   <span>Рецепты</span>
                 </Menu.Item>
               </Menu>
-            </Sider>
 
             <Layout className="site-layout">
               <Content style={{ margin: "0 16px" }}>

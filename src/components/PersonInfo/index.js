@@ -1,5 +1,5 @@
 import React from "react";
-import { Alert, Button, Divider, Row, Col, Modal } from "antd";
+import { Alert, Button, Divider, Row, Col, Modal, Input } from "antd";
 import "../../global/api";
 
 import axios from "axios";
@@ -12,7 +12,8 @@ export default class PersonInfo extends React.Component {
     super(props);
     this.state = {
       visible: false,
-      nutrions: null
+      nutrions: null,
+      flag: false
     };
   }
 
@@ -26,6 +27,10 @@ export default class PersonInfo extends React.Component {
   timeForPLC = async () => {
     await axios.post(`${baseURL}/nutritions/${this.props.person._id}`);
   };
+
+  handleChangeNutritions = (e) =>{
+    this.setState({ nutrions: {...this.state.nutrions, nutrionsPerKg: {...this.state.nutrions.nutrionsPerKg, [e.target.name] : e.target.value }} });
+  }
 
   render() {
     return (
@@ -41,22 +46,39 @@ export default class PersonInfo extends React.Component {
         {this.state.visible && (
           <>
             <h3 style={{ textAlign: "center" }}>
-              Белки: {Math.trunc(this.state.nutrions.proteins)} г. Жиры:{" "}
-              {Math.trunc(this.state.nutrions.lipids)}г. Углеводы:{" "}
-              {Math.trunc(this.state.nutrions.carbos)} г. ККал:{" "}
+              Белки: {Math.trunc(this.state.nutrions.proteins)} г. Жиры:
+              {Math.trunc(this.state.nutrions.lipids)}г. Углеводы:
+              {Math.trunc(this.state.nutrions.carbos)} г. ККал:
               {Math.trunc(this.state.nutrions.kcal)}
             </h3>
 
             <h3 style={{ textAlign: "center" }}>
-              Кол-во белков на кг массы тела:{" "}
-              {this.state.nutrions.nutrionsPerKg.proteins}
+              Кол-во белков на кг массы тела:
+                {this.state.flag ? <Input  name="proteins" 
+                onChange={(e) => this.handleChangeNutritions(e)} 
+                value={this.state.nutrions.nutrionsPerKg.proteins}/>
+                 : this.state.nutrions.nutrionsPerKg.proteins}
             </h3>
 
             <h3 style={{ textAlign: "center" }}>
-              {" "}
-              Кол-во жиров на кг массы тела:{" "}
-              {this.state.nutrions.nutrionsPerKg.lipids}
+              Кол-во жиров на кг массы тела:
+                {this.state.flag ? <Input name="lipids"
+                 onChange={(e) => this.handleChangeNutritions(e)} 
+                 value={this.state.nutrions.nutrionsPerKg.lipids}/> 
+                 : this.state.nutrions.nutrionsPerKg.lipids}
             </h3>
+            <Row>
+              <Button value="small"
+               onClick={() => this.state.flag ? 
+                (this.setState({ flag: false }),
+                api.updateLoot("nutritions",  {nutrionsPerKg : this.state.nutrions.nutrionsPerKg, kcal: this.state.nutrions.kcal}, this.props.person._id ))
+                : 
+                this.setState({ flag: true })} >
+
+                {this.state.flag ? <>Подтвердить</> : <>Редактировать</> }
+                </Button>
+
+            </Row>
           </>
         )}
         <Button
@@ -65,7 +87,7 @@ export default class PersonInfo extends React.Component {
           style={{ margin: "1%" }}
           onClick={() => this.getNutrions()}
         >
-          А не пойти бы тебе нахуй
+          КБЖУ
         </Button>
         <Button
           type="primary"
