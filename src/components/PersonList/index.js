@@ -77,28 +77,27 @@ class PersonList extends React.Component {
           key={person._id}
         >
           <Row justify="space-around" align="middle">
-            <Col span={6}>
+            <Col xs={24} md={6}>
               <p>{person.firstName}</p>
             </Col>
-            <Col span={6}>
+            <Col xs={24} md={6}>
               <p>{person.lastName}</p>
             </Col>
-            <Col span={6}>
+            <Col xs={24} md={6}>
               <Button
                 onClick={() => this.showModal(person)}
                 type="primary"
                 size="middle"
-                style={{ margin: "1%" }}
+                style={{ margin: "1% 10%" }}
               >
                 Развернуть
               </Button>
-            </Col>
-            <Col span={6}>
+
               <Button
                 danger
                 type="primary"
                 size="middle"
-                style={{ margin: "1%" }}
+                style={{ margin: "1% 10%" }}
                 onClick={() => {
                   this.deleteOnClick(person);
                 }}
@@ -114,7 +113,7 @@ class PersonList extends React.Component {
     return (
       <div style={{ textAlign: "center" }}>
         <Input
-          style={{ width: 200, marginBottom: "20px" }}
+          style={{ width: "22.42rem", marginBottom: "20px" }}
           value={this.state.search}
           onChange={e => {
             this.setState({ search: e.target.value });

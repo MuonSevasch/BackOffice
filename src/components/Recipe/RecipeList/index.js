@@ -50,27 +50,29 @@ export default class RecipeList extends Component {
             key={index}
           >
             <Row justify="space-around" align="middle">
-              <Col span={12}>
+              <Col xs={24} md={12}>
                 <p>{recipe.name}</p>
               </Col>
-
-              <Button
-                onClick={() => this.showModal(recipe)}
-                type="primary"
-                size="middle"
-                style={{ margin: "1%" }}
-              >
-                Развернуть
-              </Button>
-              <Button
-                onClick={() => {
-                  this.handleDeletion(recipe);
-                }}
-                size="small"
-                type="danger"
-              >
-                Удалить рецепт
-              </Button>
+              <Col xs={24} md={12}>
+                <Button
+                  onClick={() => this.showModal(recipe)}
+                  type="primary"
+                  size="middle"
+                  style={{ margin: "1% 10%" }}
+                >
+                  Развернуть
+                </Button>
+                <Button
+                  onClick={() => {
+                    this.handleDeletion(recipe);
+                  }}
+                  size="middle"
+                  type="danger"
+                  style={{ margin: "1% 10%" }}
+                >
+                  Удалить рецепт
+                </Button>
+              </Col>
             </Row>
           </div>
         );
@@ -94,7 +96,7 @@ export default class RecipeList extends Component {
         </Modal>
 
         <Input
-          style={{ width: 200, marginBottom: "20px" }}
+          style={{ width: "22.42rem", marginBottom: "20px" }}
           value={this.state.search}
           onChange={e => {
             this.setState({ search: e.target.value });
