@@ -1,10 +1,10 @@
 import React, { Component } from "react";
-import { Modal, Button, Input, Row } from "antd";
+import { Modal, Button, Input, Row, Col } from "antd";
 
 import SingleRecipe from "../SingleRecipe";
 import Api from "../../../global/api";
 
-import "../../PersonList/index.css"
+import "../../PersonList/index.css";
 
 export default class RecipeList extends Component {
   state = {
@@ -23,7 +23,7 @@ export default class RecipeList extends Component {
   };
 
   updateRecipe = async id => {
-   await Api.getLoot(`meals`, id).then(loot => {
+    await Api.getLoot(`meals`, id).then(loot => {
       this.setState({
         recipe: loot
       });
@@ -46,10 +46,15 @@ export default class RecipeList extends Component {
         return (
           <div
             className="person-info"
-            style={{ textAlign: "center", marginBottom : 15 }}
+            style={{ textAlign: "center", marginBottom: 15 }}
             key={index}
           >
             <Row justify="space-around" align="middle">
+              <Col span={12}>
+                <p>{recipe.name}</p>
+              </Col>
+      
+      
               <h1>{recipe.name}</h1>
               {/* <h1>{recipe.lastName}</h1> */}
               <Button

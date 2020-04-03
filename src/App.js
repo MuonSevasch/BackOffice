@@ -10,6 +10,9 @@ import Recipe from "./components/Recipe";
 
 import Api from "./global/api";
 
+// username: "test-user",
+// password: "my-password"
+
 const { Content, Sider } = Layout;
 
 class App extends React.Component {
@@ -19,11 +22,9 @@ class App extends React.Component {
     collapsed: false,
     loading: false,
     error: null,
-    persons: [],
-
+    
     clientsVisibility: true,
-    username: "test-user",
-    password: "my-password"
+
   };
 
   setLoginStatus = () => {
@@ -32,8 +33,7 @@ class App extends React.Component {
 
   logout = () => {
     Api.logout().then(res => {
-      localStorage.removeItem("signedIn");
-      
+      localStorage.removeItem("signedIn");  
     });
   };
 
@@ -41,22 +41,8 @@ class App extends React.Component {
     this.setState({ collapsed });
   };
 
-  componentDidMount() {
-    // Api.login(this.state.username, this.state.password).then(() => {
-    Api.getAllLoot("userForms").then(result => {
-      this.setState({ persons: result });
-    });
-    // });
-  }
-
-  updatePersons = () => {
-    Api.getAllLoot("userForms").then(x => {
-      this.setState({ persons: x });
-    });
-  };
-
   render() {
-    const { persons, signedIn } = this.state;
+    const { signedIn } = this.state;
 
     return (
 
@@ -82,7 +68,6 @@ class App extends React.Component {
                         receptVisibility: false,
                         clientsVisibility: true
                       });
-                  this.updatePersons();
                 }}
                 theme="dark"
               >
@@ -106,8 +91,6 @@ class App extends React.Component {
                 >
                   {this.state.clientsVisibility && (
                     <PersonList
-                      persons={persons}
-                      updatePersons={this.updatePersons}
                     />
                   )}
                   {this.state.receptVisibility && <Recipe />}

@@ -1,23 +1,36 @@
 import React from "react";
 import PersonInfo from "../PersonInfo";
 
-import { Button,  Row, Col, Modal, Input } from "antd";
+import { Button, Row, Col, Modal, Input } from "antd";
 
+import "./index.css";
 
-import "./index.css"
-
-import api from "../../global/api";
-
+import Api from "../../global/api";
 
 class PersonList extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      persons: [],
       search: "",
       visible: false,
       person: null
     };
   }
+
+  componentDidMount() {
+    // Api.login(this.state.username, this.state.password).then(() => {
+    Api.getAllLoot("userForms").then(result => {
+      this.setState({ persons: result });
+    });
+    // });
+  }
+
+  updatePersons = () => {
+    Api.getAllLoot("userForms").then(x => {
+      this.setState({ persons: x });
+    });
+  };
 
   handleCancel = () => {
     this.setState({
@@ -31,22 +44,18 @@ class PersonList extends React.Component {
     });
   };
 
-  showModal = async (pers) => {
-    console.log(pers._id)
-    api.getLoot('userForms', pers._id).then(x => {
+  showModal = async pers => {
+    console.log(pers._id);
+    Api.getLoot("userForms", pers._id).then(x => {
       this.setState({
         visible: true,
         person: x
-      })
-    })
-
+      });
+    });
   };
 
-
-
-
   filterPoets = () => {
-    let filteredPoets = this.props.persons;
+    let filteredPoets = this.state.persons;
     filteredPoets = filteredPoets.filter(poet => {
       let poetName = poet.firstName.toLowerCase() + poet.lastName.toLowerCase();
       return poetName.indexOf(this.state.search.toLowerCase()) !== -1;
@@ -54,22 +63,26 @@ class PersonList extends React.Component {
     return filteredPoets;
   };
 
-  deleteOnClick = async (person) => {
-    await api.deleteLoot('userforms', person._id);
-    await this.props.updatePersons()
-  }
+  deleteOnClick = async person => {
+    await Api.deleteLoot("userforms", person._id);
+    this.updatePersons();
+  };
 
   render() {
     let parasha = this.filterPoets().map((person, index) => {
       return (
         <div
           className="person-info"
-          style={{ textAlign: "center", marginBottom : 15 }}
+          style={{ textAlign: "center", marginBottom: 15 }}
           key={person._id}
         >
-          <Row justify="space-around" align="middle" >
-            <Col span={6}><p>{person.firstName}</p></Col>
-            <Col span={6}><p>{person.lastName}</p></Col>
+          <Row justify="space-around" align="middle">
+            <Col span={6}>
+              <p>{person.firstName}</p>
+            </Col>
+            <Col span={6}>
+              <p>{person.lastName}</p>
+            </Col>
             <Col span={6}>
               <Button
                 onClick={() => this.showModal(person)}
@@ -79,10 +92,17 @@ class PersonList extends React.Component {
               >
                 Развернуть
               </Button>
-
             </Col>
             <Col span={6}>
-              <Button danger type="primary" size="middle" style={{ margin: "1%" }} onClick={() => { this.deleteOnClick(person) }}>
+              <Button
+                danger
+                type="primary"
+                size="middle"
+                style={{ margin: "1%" }}
+                onClick={() => {
+                  this.deleteOnClick(person);
+                }}
+              >
                 Удалить
               </Button>
             </Col>
@@ -91,16 +111,15 @@ class PersonList extends React.Component {
       );
     });
 
-
     return (
       <div style={{ textAlign: "center" }}>
         <Input
           style={{ width: 200, marginBottom: "20px" }}
           value={this.state.search}
-
-          onChange={(e) => { this.setState({ search: e.target.value }) }}
+          onChange={e => {
+            this.setState({ search: e.target.value });
+          }}
           placeholder="Поиск"
-
         />
         <Modal
           destroyOnClose={true}
@@ -109,8 +128,7 @@ class PersonList extends React.Component {
           onCancel={this.handleCancel}
           footer={null}
         >
-            <PersonInfo person={this.state.person} />
-
+          <PersonInfo person={this.state.person} />
         </Modal>
         {parasha}
       </div>

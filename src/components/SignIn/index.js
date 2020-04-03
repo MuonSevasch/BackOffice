@@ -18,7 +18,7 @@ export default class SignIn extends Component {
         this.props.setLoginStatus();
         localStorage.setItem('signedIn', true)
       }
-    });
+    }).catch(e => console.log(e)) ;
   };
 
   render() {

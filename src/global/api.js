@@ -3,8 +3,12 @@ import axios from "axios";
 const baseURL = "http://25.48.59.169:8080/api";
 
 class Api {
+  constructor(){
+    axios.defaults.timeout = 1000*50
+  }
+  
   async login(username, password) {
-    let data = {};
+    let data = "failed";
     await axios
       .post(`${baseURL}/login`, { username, password })
       .then(response => {
@@ -110,8 +114,6 @@ class Api {
       });
     return data;
   }
-
-
 
   async updateLoot(root, info, id) {
     let data = {};
