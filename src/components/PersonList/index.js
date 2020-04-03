@@ -73,7 +73,7 @@ class PersonList extends React.Component {
       return (
         <div
           className="person-info"
-          style={{ textAlign: "center", marginBottom: 15 }}
+          style={{ textAlign: "center", marginBottom: 15,  maxWidth: "90%"}}
           key={person._id}
         >
           <Row justify="space-around" align="middle">
