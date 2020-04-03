@@ -113,7 +113,7 @@ class PersonList extends React.Component {
     return (
       <div style={{ textAlign: "center", margin:"0 5%"}}>
         <Input
-          style={{ width: "12.42rem", marginBottom: "20px" }}
+          style={{ width: "11.42rem", marginBottom: "20px" }}
           value={this.state.search}
           onChange={e => {
             this.setState({ search: e.target.value });

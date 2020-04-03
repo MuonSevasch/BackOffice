@@ -96,7 +96,7 @@ export default class RecipeList extends Component {
         </Modal>
 
         <Input
-          style={{ width: "22.42rem", marginBottom: "20px" }}
+          style={{ width: "11.42rem", marginBottom: "20px" }}
           value={this.state.search}
           onChange={e => {
             this.setState({ search: e.target.value });
