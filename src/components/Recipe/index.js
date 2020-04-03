@@ -52,8 +52,12 @@ export default class Recipe extends Component {
         )}
 
         {!error && !loading && (
-          <div>
-            <Button onClick={this.setShowConstructor} type="primary">
+          <div style={{ textAlign: "center", marginBottom: 15 }}>
+            <Button
+              style={{ marginBottom: 15 }}
+              onClick={this.setShowConstructor}
+              type="primary"
+            >
               Добавить рецепт
             </Button>
 
