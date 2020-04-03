@@ -21,7 +21,6 @@ export default class PersonInfo extends React.Component {
     await api.getLoot("nutritions", this.props.person._id).then(x => {
       x !== "" ? this.setState({ nutrions: x, visible: true }) : console.log();
     });
-    console.log(this.state.nutrions);
   };
 
   timeForPLC = async () => {
@@ -68,10 +67,10 @@ export default class PersonInfo extends React.Component {
                  : this.state.nutrions.nutrionsPerKg.lipids}
             </h3>
             <Row>
-              <Button value="small"
+              <Button value="small" style ={{marginBottom:12}}
                onClick={() => this.state.flag ? 
                 (this.setState({ flag: false }),
-                api.updateLoot("nutritions",  {nutrionsPerKg : this.state.nutrions.nutrionsPerKg, kcal: this.state.nutrions.kcal}, this.props.person._id ))
+                api.updateLoot("nutritions",  {nutrionsPerKg : this.state.nutrions.nutrionsPerKg, kcal: this.state.nutrions.kcal}, this.props.person._id )).then(() => {this.getNutrions()})
                 : 
                 this.setState({ flag: true })} >
 
@@ -84,7 +83,7 @@ export default class PersonInfo extends React.Component {
         <Button
           type="primary"
           size="middle"
-          style={{ margin: "1%" }}
+          style={{ margin: "1%" , marginBottom:12, marginRight: 10 }}
           onClick={() => this.getNutrions()}
         >
           КБЖУ
@@ -92,14 +91,14 @@ export default class PersonInfo extends React.Component {
         <Button
           type="primary"
           size="middle"
-          style={{ margin: "1%" }}
+          style={{ margin: "1%" , marginBottom:12, marginRight: 10 }}
           onClick={() => {
             this.timeForPLC();
           }}
         >
           Расчитать БЖУ
         </Button>
-        <Button type="primary" size="middle" style={{ margin: "1%" }}>
+        <Button type="primary" size="middle" style={{ margin: "1%", marginBottom:10, marginRight: 10 }}>
           Сгенерировать PDF
         </Button>
       </>
