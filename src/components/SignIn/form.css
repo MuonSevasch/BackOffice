@@ -1,0 +1,16 @@
+.body {
+  text-align: center;
+}
+
+.form {
+  display: inline-block;
+  position: relative;
+
+  z-index: 1;
+  background: #ffffff;
+  max-width: 25.7rem;
+  margin: 8rem auto 7.14rem auto;
+  padding: 2.14rem 2.14rem 1.12rem 2.14rem;
+
+  box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
+}

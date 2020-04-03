@@ -53,10 +53,7 @@ export default class RecipeList extends Component {
               <Col span={12}>
                 <p>{recipe.name}</p>
               </Col>
-      
-      
-              <h1>{recipe.name}</h1>
-              {/* <h1>{recipe.lastName}</h1> */}
+
               <Button
                 onClick={() => this.showModal(recipe)}
                 type="primary"
@@ -79,7 +76,7 @@ export default class RecipeList extends Component {
         );
       });
     return (
-      <div>
+      <div style={{ textAlign: "center" }}>
         <Modal
           centered={true}
           destroyOnClose={true}
@@ -97,6 +94,7 @@ export default class RecipeList extends Component {
         </Modal>
 
         <Input
+          style={{ width: 200, marginBottom: "20px" }}
           value={this.state.search}
           onChange={e => {
             this.setState({ search: e.target.value });

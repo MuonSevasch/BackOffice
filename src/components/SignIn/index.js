@@ -5,6 +5,8 @@ import { UserOutlined, LockOutlined } from "@ant-design/icons";
 
 import Api from "../../global/api";
 
+import "./form.css";
+
 export default class SignIn extends Component {
   handleChange = event => {
     this.setState({
@@ -13,19 +15,22 @@ export default class SignIn extends Component {
   };
 
   handleSubmit = ({ username, password }) => {
-    Api.login(username, password).then(res => {
-      if (res !== "failed") {
-        this.props.setLoginStatus();
-        localStorage.setItem('signedIn', true)
-      }
-    }).catch(e => console.log(e)) ;
+    Api.login(username, password)
+      .then(res => {
+        if (res !== "failed") {
+          this.props.setLoginStatus();
+          localStorage.setItem("signedIn", true);
+        }
+      })
+      .catch(e => console.log(e));
   };
 
   render() {
     return (
+      <div className="body">
       <Form
+        className="form"
         name="normal_login"
-        className="login-form"
         initialValues={{ remember: true }}
         onFinish={this.handleSubmit}
       >
@@ -59,6 +64,7 @@ export default class SignIn extends Component {
           </Button>
         </Form.Item>
       </Form>
+      </div>
     );
   }
 }
