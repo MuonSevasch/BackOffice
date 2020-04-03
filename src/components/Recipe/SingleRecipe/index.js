@@ -4,15 +4,10 @@ import { Button, Row } from "antd";
 
 import RecipeConstructor from "../RecipeConstructor";
 
+import { mealCategories } from "../../../utils"
+
 import "../recipe.css";
-
-const mealCategories = [
-  { breakfast: "Завтрак" },
-  { lunch: "Обед" },
-  { dinner: "Ужин" },
-  { snack: "Перекус" }
-];
-
+ 
 export default class SingleRecipe extends Component {
   state = {
     editFlag: false
