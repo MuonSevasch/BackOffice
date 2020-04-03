@@ -1,5 +1,5 @@
 import React from "react";
-import { Alert, Button, Divider, Row, Col, Modal, Input } from "antd";
+import {  Button, Row,  Input } from "antd";
 import "../../global/api";
 
 import axios from "axios";
