@@ -37,7 +37,7 @@ export default class SingleRecipe extends Component {
             <ul className="ul-container">
               {recipe.ingridients.length !== 0 &&
                 recipe.ingridients.map((el, index) => {
-                  console.log(el);
+           
                   return (
                     <li className="li-container" key={index}>
                       <h4>
@@ -49,6 +49,7 @@ export default class SingleRecipe extends Component {
             </ul>
             <div>
               {recipe.category.map((el, i) => (
+                
                 <h4 key={i}>{mealCategories[el]}</h4>
               ))}
             </div>
